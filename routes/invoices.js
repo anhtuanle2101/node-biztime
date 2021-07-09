@@ -28,14 +28,14 @@ router.get('/:id', async (req, res, next)=>{
 
 router.post('/', async (req, res, next)=>{
     try {
-        const {id, comp_code, amt, paid, add_date, paid_date} = req.body;
+        const {comp_code, amt, paid, add_date, paid_date} = req.body;
         
         const rs = await db.query(`INSERT INTO invoices
-        (id, comp_code, amt, paid, add_date, paid_date)
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING *`,[id, comp_code, amt, paid, add_date, paid_date])
+        (comp_code, amt, paid, add_date, paid_date)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *`,[comp_code, amt, paid, add_date, paid_date])
 
-        return res.json({invoice: rs.rows[0]})
+        return res.status(201).json({invoice: rs.rows[0]})
     } catch (e) {
         return next(e);
     }
@@ -52,7 +52,7 @@ router.patch('/:id', async (req, res, next)=>{
         if (rs.rows.length === 0){
             throw new ExpressError(`The invoice with id ${id} couldn't be found`,404);
         }
-        return res.json({company: rs.rows[0]})
+        return res.json({invoice: rs.rows[0]})
     } catch (e) {
         return next(e);
     }
@@ -66,7 +66,7 @@ router.delete('/:id', async (req, res, next)=>{
         if (rs.rows.length === 0){
             throw new ExpressError(`The invoice with id ${id} couldn't be found`,404);
         }
-        return res.json({msg:'Deleted!'});
+        return res.json({msg:'DELETED!'});
     } catch (e) {
         return next(e);
     }
