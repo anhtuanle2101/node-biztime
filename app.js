@@ -1,6 +1,4 @@
 /** BizTime express application. */
-
-
 const express = require("express");
 const app = express();
 const ExpressError = require("./expressError")
@@ -14,6 +12,10 @@ app.use('/companies', CompanyRouter);
 //Invoices Routes
 const InvoiceRouter = require('./routes/invoices');
 app.use('/invoices', InvoiceRouter);
+
+//Industries Routes
+const industryRouter = require('./routes/industries');
+app.use('/industries', industryRouter);
 
 /** 404 handler */
 app.use(function(req, res, next) {
