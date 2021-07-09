@@ -76,13 +76,13 @@ describe("POST /invoices", ()=>{
 // PATCH /users/:id
 describe("PATCH /invoices", ()=>{
     test("Updates a single invoice", async()=>{
-        const res = await request(app).patch(`/invoices/${testInvoice.id}`).send({comp_code:"MIC", amt:500.25, paid:false, add_date:'2021-06-24', paid_date:'2021-01-01'});
+        const res = await request(app).patch(`/invoices/${testInvoice.id}`).send({amt:500, paid:true});
         expect(res.status).toBe(200);
         expect(res.body).toEqual({
             invoice:{
-                comp_code:"MIC", 
-                amt:500.25, 
-                paid:false, 
+                comp_code:'AMA', 
+                amt:500, 
+                paid:true, 
                 add_date: expect.any(String), 
                 paid_date: expect.any(String), 
                 id: expect.any(Number)
