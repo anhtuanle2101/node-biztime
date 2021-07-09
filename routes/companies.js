@@ -33,7 +33,7 @@ router.post('/', async (req, res, next)=>{
             const rs = await db.query(`INSERT INTO companies
             VALUES ($1, $2, $3)
             RETURNING *`,[code, name, description])
-            return res.json({company: rs.rows[0]})
+            return res.status(201).json({company: rs.rows[0]})
         }else{
             throw new ExpressError("code, name, and description fields are required", 400);
         }

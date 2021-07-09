@@ -30,7 +30,12 @@ describe("GET /invoices", ()=>{
     test("Get list of invoices", async ()=>{
         const res = await request(app).get('/invoices');
         expect(res.status).toBe(200);
-        expect(res.body.invoices[0]).toEqual(testInvoice);
+        expect(res.body.invoices[0].id).toEqual(testInvoice.id);
+        expect(res.body.invoices[0].comp_code).toEqual(testInvoice.comp_code);
+        expect(res.body.invoices[0].amt).toEqual(testInvoice.amt);
+        expect(res.body.invoices[0].paid).toEqual(testInvoice.paid);
+        expect(Date.parse(res.body.invoices[0].paid_date)===Date.parse(testInvoice.paid_date)).toBe(true);
+        expect(Date.parse(res.body.invoices[0].add_date)===Date.parse(testInvoice.add_date)).toBe(true);
     })
 })
 
@@ -38,7 +43,12 @@ describe("GET /invoices/:id", ()=>{
     test("Gets a single invoice", async()=>{
         const res = await request(app).get(`/invoices/${testInvoice.id}`);
         expect(res.status).toBe(200);
-        expect(res.body).toEqual({invoice: testInvoice})
+        expect(res.body.invoice.id).toEqual(testInvoice.id);
+        expect(res.body.invoice.comp_code).toEqual(testInvoice.comp_code);
+        expect(res.body.invoice.amt).toEqual(testInvoice.amt);
+        expect(res.body.invoice.paid).toEqual(testInvoice.paid);
+        expect(Date.parse(res.body.invoice.paid_date)===Date.parse(testInvoice.paid_date)).toBe(true);
+        expect(Date.parse(res.body.invoice.add_date)===Date.parse(testInvoice.add_date)).toBe(true);
     })
     test("Responds with 404 for invalid id", async()=>{
         const res = await request(app).get('/invoices/123');
